@@ -2,7 +2,7 @@
 import LoadingCard from "@/components/shared/LoadingCard"
 import { genres } from "@/lib/constant"
 import { getMoviesByGenre } from "@/lib/services/movie.service"
-import { useEffect, useState, useTransition } from "react"
+import { useCallback, useEffect, useState, useTransition } from "react"
 
 interface IParams {
   genreName: string
@@ -11,24 +11,44 @@ import { motion } from "framer-motion"
 import { IMovie } from "@/lib/types"
 import MovieCard from "@/components/shared/MovieCard"
 import Link from "next/link"
-import Search from "@/components/shared/header/Search"
+import Search from "@/components/shared/movieByGenre/Search"
+import { useRouter } from "next/navigation"
 
 const GenrePage = ({ params }: { params: IParams }) => {
+  const router = useRouter()
   const { genreName } = params
   const [movies, setMovies] = useState<IMovie[] | null>(null)
   const [transition, setTransition] = useTransition()
-
+  const [searchTerm, setSearchTerm] = useState("")
   useEffect(() => {
     setTransition(async () => {
       const genreId = genres.find((genre) => genre.name === genreName)?.id
-      if (!genreId) return
+      if (!genreId) {
+        return router.push("/")
+      }
       const fetchMovies = async () => {
         const data = await getMoviesByGenre(genreId)
         setMovies(data)
       }
       fetchMovies()
     })
-  }, [genreName])
+  }, [genreName, router])
+
+  const filterMovies = useCallback(() => {
+    if (!searchTerm) return movies
+    const filterData = movies?.filter((movie) => {
+      if (movie.title?.toLowerCase().includes(searchTerm.toLowerCase()))
+        return movie
+      if (movie.name?.toLowerCase().includes(searchTerm.toLowerCase()))
+        return movie
+      if (movie.original_name?.toLowerCase().includes(searchTerm.toLowerCase()))
+        return movie
+      if (movie.release_date?.toLowerCase().includes(searchTerm.toLowerCase()))
+        return movie
+    })
+    return filterData
+  }, [searchTerm, movies])
+
 
   if (transition) {
     return (
@@ -46,16 +66,18 @@ const GenrePage = ({ params }: { params: IParams }) => {
         exit={{ opacity: 0 }}
         transition={{ duration: 2 }}
       >
-        <Search movies={movies} />
+        <div className="flex w-full items-center gap-2">
+          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        </div>
         <h1 className="group text-3xl text-primary transition-all hover:text-foreground">
           {genreName}{" "}
           <span className="text-muted-foreground transition-all group-hover:text-primary">
             Movies
           </span>
         </h1>
-        {movies && (
+        {filterMovies() && (
           <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-            {movies.map((movie: IMovie) => (
+            {filterMovies()?.map((movie: IMovie) => (
               <Link
                 href={`/movie/${movie.id}`}
                 className="group w-full  space-y-4"

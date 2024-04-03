@@ -1,13 +1,9 @@
 "use client"
-import { IMovie } from "@/lib/types"
 import { SearchIcon } from "lucide-react"
 import { useState } from "react"
 
-interface IProps {
-  movies?: IMovie[] | null
-}
 
-const Search = ({ movies }: IProps) => {
+const SearchHeader = () => {
   const [searchTerm, setSearchTerm] = useState<string>("")
   return (
     <div
@@ -24,4 +20,4 @@ const Search = ({ movies }: IProps) => {
   )
 }
 
-export default Search
+export default SearchHeader

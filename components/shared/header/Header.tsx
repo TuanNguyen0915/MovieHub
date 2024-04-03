@@ -3,7 +3,7 @@ import Logo from "./Logo"
 import NavLink from "./NavLink"
 
 import MobileNav from "./MobileNav"
-import Search from "./Search"
+import Search from "./SearchHeader"
 
 const Header = () => {
   return (
@@ -13,7 +13,7 @@ const Header = () => {
         <NavLink style="hidden lg:flexBetween gap-4" />
       </div>
       <div className="lg:flexBetween relative hidden gap-4">
-        <Search />
+        <Search styles="flexCenter hover:flexBetween group h-12 w-12  rounded-full border border-muted-foreground p-2 transition-all duration-700 hover:w-[16rem] hover:gap-2 hover:border-foreground" />
         <Button variant={"custom"}>Log In</Button>
       </div>
       <div className="flex lg:hidden">
