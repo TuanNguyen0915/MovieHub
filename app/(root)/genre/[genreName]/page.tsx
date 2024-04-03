@@ -45,10 +45,11 @@ const GenrePage = ({ params }: { params: IParams }) => {
         return movie
       if (movie.release_date?.toLowerCase().includes(searchTerm.toLowerCase()))
         return movie
+      if (movie.overview?.toLowerCase().includes(searchTerm.toLowerCase()))
+        return movie
     })
     return filterData
   }, [searchTerm, movies])
-
 
   if (transition) {
     return (
