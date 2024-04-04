@@ -1,17 +1,36 @@
 "use client"
 import { IMovie } from "@/lib/types"
 import Image from "next/image"
-import { Progress } from "@/components/ui/progress"
 import { PlayCircleIcon } from "lucide-react"
 import Link from "next/link"
 import { genres } from "@/lib/constant"
+import { useState } from "react"
+import { getMovieVideo } from "@/lib/services/movie.service"
+import { Button } from "@/components/ui/button"
 
 interface IGenre {
   name: string | undefined
   id: number
 }
-
+interface ITrailer {
+  iso_639_1?: string
+  iso_3166_1?: string
+  name?: string
+  key?: string
+  site?: string
+  type?: string
+  official?: boolean
+  id?: string
+}
 const HeroCard = ({ movie }: { movie: IMovie }) => {
+  const [trailer, setTrailer] = useState<ITrailer | null>()
+  const [playTrailer, setPlayTrailer] = useState(false)
+  const fetchTrailer = async () => {
+    const data = await getMovieVideo(movie.id)
+    const res = data.find((item: any) => item.type === "Trailer")
+    setTrailer(res)
+    setPlayTrailer(true)
+  }
   const src = `https://image.tmdb.org/t/p/original/${movie.backdrop_path || movie.poster_path}`
   const movieName = movie.name || movie.title || movie.original_name
   let genresListName: IGenre[] = []
@@ -19,8 +38,9 @@ const HeroCard = ({ movie }: { movie: IMovie }) => {
     const item = genres.find((item) => item.id === genre)
     if (item) genresListName.push(item)
   })
+
   return (
-    <div className="h-[50vh] lg:h-[70vh] w-full">
+    <div className="h-[50vh] w-full lg:h-[70vh]">
       <div className="relative h-full w-full">
         <Image
           src={src}
@@ -46,6 +66,14 @@ const HeroCard = ({ movie }: { movie: IMovie }) => {
               >
                 ...read more
               </Link>
+              <div className="mt-20 w-full space-x-4 lg:hidden">
+                <Button variant="default" onClick={fetchTrailer}>
+                  Play Trailer
+                </Button>
+                <Button variant="secondary">
+                  <Link href={`/movie/${movie.id}`}>More Details</Link>
+                </Button>
+              </div>
             </div>
             <div className="flex w-full gap-2 max-lg:hidden">
               <span className="font-bold text-primary">Genres</span>
@@ -72,9 +100,19 @@ const HeroCard = ({ movie }: { movie: IMovie }) => {
                 {movie.release_date}
               </span>
             </p>
+            <Button
+              variant="custom"
+              className="mt-20 p-4 text-xl font-semibold max-lg:hidden"
+            >
+              <Link href={`/movie/${movie.id}`}>View Details</Link>
+            </Button>
           </div>
+          {/* PLAY TRAILER */}
           <div className="flexCenter w-full max-lg:hidden">
-            <div className="flexCenter group w-full gap-4">
+            <div
+              className="flexCenter group w-full gap-4"
+              onClick={fetchTrailer}
+            >
               <PlayCircleIcon className="group-hover:animate-custom-spin size-28 transition-all duration-1000 group-hover:text-primary group-hover:brightness-150" />
               <h1 className="text-3xl font-bold text-muted-foreground group-hover:animate-pulse group-hover:text-foreground">
                 Play trailer
@@ -83,6 +121,23 @@ const HeroCard = ({ movie }: { movie: IMovie }) => {
           </div>
         </div>
       </div>
+      {playTrailer && (
+        <div className="flexCenter absolute bottom-0 left-0 top-0 z-50 mx-auto h-full w-full gap-10 bg-black/40 p-8 backdrop-blur-lg">
+          <div className="flexCenter h-2/3 w-2/3 flex-col gap-2">
+            <div className="flex w-full items-center justify-end">
+              <Button variant={"custom"} onClick={() => setPlayTrailer(false)}>
+                Close
+              </Button>
+            </div>
+            <iframe
+              allowFullScreen
+              loading="lazy"
+              className="h-full w-full"
+              src={`https://www.youtube.com/embed/${trailer?.key}`}
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

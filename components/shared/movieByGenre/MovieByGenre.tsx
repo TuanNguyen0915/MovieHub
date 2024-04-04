@@ -1,20 +1,17 @@
 "use client"
 import Link from "next/link"
 import React, { useEffect, useState, useTransition } from "react"
-import { motion } from "framer-motion"
 import { getMoviesByGenre } from "@/lib/services/movie.service"
 import LoadingCard from "../LoadingCard"
-import MovieCard from "../MovieCard"
 import { IMovie } from "@/lib/types"
-import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
-import { ArrowRight } from "lucide-react"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import SwiperCard from "../SwiperCard"
 interface IProps {
   genre: {
     id: number
@@ -55,45 +52,7 @@ const MovieByGenre = ({ genre, idx }: IProps) => {
           </AccordionTrigger>
           <AccordionContent>
             <div className="w-full">
-              <Swiper
-                loop
-                slidesPerView={2}
-                spaceBetween={50}
-                breakpoints={{
-                  640: {
-                    slidesPerView: 3,
-                  },
-                  768: {
-                    slidesPerView: 4,
-                  },
-                  1024: {
-                    slidesPerView: 5,
-                  },
-                }}
-              >
-                {movies?.slice(0, 10).map((movie: IMovie) => {
-                  const title = movie.title || movie.original_name
-                  return (
-                    <SwiperSlide key={movie.id}>
-                      <div className="h-[250px] w-[150px] md:w-[200px]">
-                        <div
-                          className="flexCenter relative h-[200px] w-full"
-                          key={movie.id}
-                        >
-                          <MovieCard movie={movie} />
-                        </div>
-                        {title && (
-                          <p className="text-muted-foreground transition-all">
-                            {title.length > 20
-                              ? title.slice(0, 20) + "..."
-                              : title}
-                          </p>
-                        )}
-                      </div>
-                    </SwiperSlide>
-                  )
-                })}
-              </Swiper>
+              <SwiperCard movies={movies} />
               <Link
                 href={`/genre/${genre.name}`}
                 className="mt-4 tracking-wider text-muted-foreground transition-all hover:text-primary lg:mt-10 lg:text-xl"

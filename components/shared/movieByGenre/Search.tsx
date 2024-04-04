@@ -4,7 +4,6 @@ import { SearchIcon } from "lucide-react"
 
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover"
 import { PopoverContent } from "@/components/ui/popover"
-import { Button } from "@/components/ui/button"
 import { genres } from "@/lib/constant"
 import Link from "next/link"
 interface IProps {
