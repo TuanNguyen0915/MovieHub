@@ -58,7 +58,7 @@ const MoreDetails = ({ movie, videos }: IProps) => {
             },
           }}
         >
-          {videos?.map((item) => (
+          {videos?.reverse()?.map((item) => (
             <SwiperSlide key={item.key}>
               <div className="h-[250px] w-[200px]">
                 <div className="h-[200px] w-full">

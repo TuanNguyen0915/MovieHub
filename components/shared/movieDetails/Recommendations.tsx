@@ -36,7 +36,7 @@ const Recommendations = ({ movieId }: { movieId: number | undefined }) => {
           Recommendations
         </h1>
 
-        <div className="flexBetween mt-5 w-full flex-wrap gap-4 lg:mt-10 ">
+        <div className="flexBetween mt-5 w-full flex-wrap gap-4 lg:mt-10 p-2">
           {recommendations.slice(0, 10).map((movie: IMovie) => (
             <Link
               href={`/movie/${movie.id}`}

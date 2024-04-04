@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination } from "swiper/modules"
 import Image from "next/image"
 import { User2 } from "lucide-react"
+import Link from "next/link"
 
 const Reviews = ({ movieId }: { movieId: number | undefined }) => {
   const [reviews, setReviews] = useState<IReview[] | []>([])
@@ -50,17 +51,24 @@ const Reviews = ({ movieId }: { movieId: number | undefined }) => {
                 slidesPerView: 2,
               },
               1024: {
+                slidesPerView: 3,
+              },
+              1366: {
                 slidesPerView: 4,
               },
               1920: {
-                slidesPerView: 5,
+                slidesPerView: 6,
               },
             }}
           >
             {reviews.map((review) => (
               <SwiperSlide key={review.id}>
-                <div className="flexBetween h-[250px] w-[300px] flex-col ">
-                  <div className="flexCol h-[200px] w-full gap-2 rounded-lg border border-border p-2">
+                <div className="flexBetween h-[300px] w-[270px] flex-col ">
+                  <Link
+                    href={review.url}
+                    target="_blank"
+                    className="flexCol h-[250px] w-full gap-2 rounded-lg border border-border p-2 transition-all hover:border-foreground"
+                  >
                     <div className="flex w-full items-center gap-4">
                       <div className="relative h-[40px] w-[40px] rounded-full">
                         {review.author_details.avatar_path ? (
@@ -88,7 +96,7 @@ const Reviews = ({ movieId }: { movieId: number | undefined }) => {
                       {new Date(review.updated_at).toLocaleDateString() ||
                         new Date(review.created_at).toLocaleDateString()}
                     </p>
-                  </div>
+                  </Link>
                 </div>
               </SwiperSlide>
             ))}

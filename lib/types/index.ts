@@ -115,6 +115,6 @@ export interface IReview {
   created_at: string
 
   id: string
-
+  url: string
   updated_at: string
 }
