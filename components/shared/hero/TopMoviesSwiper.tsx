@@ -10,9 +10,10 @@ import TopMovieCard from "./TopMovieCard"
 interface IProps {
   movies: IMovie[]
   type: string
+  textStroke?: boolean
 }
 
-const TopMoviesSwiper = ({ movies, type }: IProps) => {
+const TopMoviesSwiper = ({ movies, type, textStroke }: IProps) => {
   return (
     <Swiper
       navigation
@@ -37,7 +38,7 @@ const TopMoviesSwiper = ({ movies, type }: IProps) => {
     >
       {movies.map((movie: IMovie, idx) => (
         <SwiperSlide key={movie.id}>
-          <TopMovieCard movie={movie} idx={idx + 1} type={type}/>
+          <TopMovieCard movie={movie} idx={idx + 1} type={type} textStoke={textStroke}/>
         </SwiperSlide>
       ))}
     </Swiper>

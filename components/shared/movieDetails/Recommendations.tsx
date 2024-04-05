@@ -47,7 +47,7 @@ const Recommendations = ({ movieId, type }: IProps) => {
           Recommendations
         </h1>
 
-        <div className="flexBetween mt-5 w-full flex-wrap gap-4 p-2 lg:mt-10">
+        <div className="mt-5 grid w-full grid-cols-2 gap-4 p-2  md:grid-cols-3 lg:mt-10 lg:grid-cols-5 place-items-center">
           {recommendations.slice(0, 10).map((movie: IMovie) => (
             <Link
               href={`/${type}/${movie.id}`}

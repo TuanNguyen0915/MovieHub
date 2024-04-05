@@ -53,7 +53,7 @@ const SeasonDetails = ({ tvShow, season }: IProps) => {
         <TvShowInfo tvShow={tvShow} season={season} trailer={trailer} />
       </div>
       <SeasonEpisodes
-        tvShowId={tvShow?.id}
+        tvShow={tvShow}
         seasonNumber={season?.season_number}
       />
     </section>

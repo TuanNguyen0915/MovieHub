@@ -51,7 +51,7 @@ const Hero = ({ movies, ratedMovies, type }: IProps) => {
             {type === "movie" ? "s" : ""}
           </h1>
         </div>
-        <TopMoviesSwiper movies={movies} type={type} />
+        <TopMoviesSwiper movies={movies} type={type} textStroke={true}/>
       </div>
       <div className="w-full space-y-4">
         <div className="w-full cursor-pointer">

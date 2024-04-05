@@ -1,26 +1,25 @@
 "use client"
 
 import { getSeasonEpisodes } from "@/lib/services/tvShow.service"
-import { IEpisode } from "@/lib/types"
+import { IEpisode, ITvShowDetails } from "@/lib/types"
 import { useEffect, useState, useTransition } from "react"
 import LoadingCard from "../LoadingCard"
-import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
 interface IProps {
-  tvShowId: number | string | undefined
+  tvShow: ITvShowDetails | undefined
   seasonNumber: number | string | undefined
 }
 
-const SeasonEpisodes = ({ tvShowId, seasonNumber }: IProps) => {
+const SeasonEpisodes = ({ tvShow, seasonNumber }: IProps) => {
   const [allEpisodes, setAllEpisodes] = useState<IEpisode[] | []>()
   const [transitioning, setTransition] = useTransition()
   useEffect(() => {
     setTransition(async () => {
-      const data = await getSeasonEpisodes(tvShowId, seasonNumber)
+      const data = await getSeasonEpisodes(tvShow?.id, seasonNumber)
       setAllEpisodes(data)
     })
-  }, [tvShowId, seasonNumber])
+  }, [tvShow?.id, seasonNumber])
 
   if (transitioning || !allEpisodes) {
     return (
@@ -30,6 +29,7 @@ const SeasonEpisodes = ({ tvShowId, seasonNumber }: IProps) => {
       </div>
     )
   } else {
+    const src = `https://image.tmdb.org/t/p/original/${tvShow?.poster_path || tvShow?.backdrop_path}`
     return (
       <motion.section
         initial={{ opacity: 0, y: 100 }}
@@ -41,18 +41,17 @@ const SeasonEpisodes = ({ tvShowId, seasonNumber }: IProps) => {
         <h1 className="mt-10 border-l-8 border-primary px-2 text-2xl lg:mt-16 lg:text-4xl">
           Episodes ({allEpisodes?.length})
         </h1>
-        <div className="mt-5 flex w-full flex-wrap justify-evenly gap-4 p-2 lg:mt-10">
+        <div className="mt-5 grid w-full grid-cols-2 place-items-center gap-4  p-2 md:grid-cols-3 lg:mt-10 lg:grid-cols-5">
           {allEpisodes?.map((episode) => {
             const runtime = episode.runtime ? episode.runtime : 0
             return (
-              <Link
-                href={`/tv-shows/episodes/${episode.id}`}
+              <div
                 key={episode.id}
                 className="flexCol group h-[200px] w-[150px] gap-2 lg:h-[250px] lg:w-[200px]"
               >
                 <div className="relative h-[150px] w-full overflow-hidden rounded-lg lg:h-[200px]">
                   <Image
-                    src={`https://image.tmdb.org/t/p/w500/${episode.still_path}`}
+                    src={`https://image.tmdb.org/t/p/w500/${episode.still_path || tvShow?.backdrop_path || tvShow?.poster_path} `}
                     fill
                     alt="movie image"
                     className="opacity-0 transition-all duration-500 group-hover:scale-110"
@@ -69,7 +68,7 @@ const SeasonEpisodes = ({ tvShowId, seasonNumber }: IProps) => {
                     {runtime} mins
                   </p>
                 </div>
-              </Link>
+              </div>
             )
           })}
         </div>

@@ -45,7 +45,7 @@ const MovieDetails = ({ movie, times }: IProps) => {
           <Image
             src={src}
             fill
-            className="relative rounded-lg object-cover object-center opacity-0 transition-all duration-1000"
+            className="relative rounded-lg object-contain opacity-0 transition-all duration-1000"
             onLoadingComplete={(image) => {
               image.classList.remove("opacity-0")
             }}

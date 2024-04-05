@@ -87,6 +87,11 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  .text-stroke {
+    color: transparent;
+    -webkit-text-stroke: 8px whitesmoke;
+    opacity: 40%;
+  }
 }
 
 .swiper-pagination-bullet {
