@@ -4,14 +4,15 @@ import { SearchIcon } from "lucide-react"
 
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover"
 import { PopoverContent } from "@/components/ui/popover"
-import { genres } from "@/lib/constant"
+import { genres, genresTvShow } from "@/lib/constant"
 import Link from "next/link"
 interface IProps {
   searchTerm: string
   setSearchTerm: (searchTerm: string) => void
+  type: string
 }
 
-const Search = ({ searchTerm, setSearchTerm }: IProps) => {
+const Search = ({ searchTerm, setSearchTerm, type }: IProps) => {
   return (
     <div className="flex w-full items-center gap-2 lg:gap-4">
       <Popover>
@@ -20,11 +21,25 @@ const Search = ({ searchTerm, setSearchTerm }: IProps) => {
         </PopoverTrigger>
         <PopoverContent>
           <div className="flexCol w-full gap-4">
-            {genres.map((genre) => (
-              <Link key={genre.id} href={`/genre/${genre.name}`} className="capitalize hover:text-primary transition-all">
-                {genre.name}
-              </Link>
-            ))}
+            {type === "movie"
+              ? genres.map((genre) => (
+                  <Link
+                    key={genre.id}
+                    href={`/movie/genre/${genre.name}`}
+                    className="capitalize transition-all hover:text-primary"
+                  >
+                    {genre.name}
+                  </Link>
+                ))
+              : genresTvShow.map((genre) => (
+                  <Link
+                    key={genre.id}
+                    href={`/tv-shows/genre/${genre.name}`}
+                    className="capitalize transition-all hover:text-primary"
+                  >
+                    {genre.name}
+                  </Link>
+                ))}
           </div>
         </PopoverContent>
       </Popover>

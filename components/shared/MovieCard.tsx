@@ -7,13 +7,15 @@ import React from "react"
 const MovieCard = ({
   movie,
   topMovies,
+  type
 }: {
   movie: IMovie
   topMovies?: boolean
+  type: string
 }) => {
   const src = `https://image.tmdb.org/t/p/w500/${movie.poster_path || movie.backdrop_path}`
   return (
-    <Link href={`/movie/${movie.id}`}>
+    <Link href={`/${type}/${movie.id}`}>
       <Image
         src={src}
         alt={movie.name || movie.original_name || "movie"}

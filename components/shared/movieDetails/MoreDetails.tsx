@@ -1,5 +1,5 @@
 "use client"
-import { ICast, IMovieDetails, IVideo } from "@/lib/types"
+import { ICast, IMovieDetails, ITvShowDetails, IVideo } from "@/lib/types"
 import { motion } from "framer-motion"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
@@ -10,19 +10,11 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import { getMovieCasts } from "@/lib/services/movie.service"
 interface IProps {
-  movie: IMovieDetails | undefined
+  movie: IMovieDetails | ITvShowDetails | undefined
   videos: IVideo[] | undefined
+  casts: ICast[] | undefined
 }
-const MoreDetails = ({ movie, videos }: IProps) => {
-  const [casts, setCasts] = useState<ICast[] | []>()
-  useEffect(() => {
-    const fetchCasts = async () => {
-      const data = await getMovieCasts(movie?.id)
-      if (data.length > 10) setCasts(data.slice(0, 10))
-      else setCasts(data)
-    }
-    fetchCasts()
-  }, [movie?.id])
+const MoreDetails = ({ movie, videos, casts }: IProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, x: 100 }}

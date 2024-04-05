@@ -13,9 +13,10 @@ import HeroCard from "./HeroCard"
 interface IProps {
   movies: IMovie[]
   ratedMovies: IMovie[]
+  type: string
 }
 
-const Hero = ({ movies, ratedMovies }: IProps) => {
+const Hero = ({ movies, ratedMovies, type }: IProps) => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -38,26 +39,28 @@ const Hero = ({ movies, ratedMovies }: IProps) => {
         >
           {movies.map((movie: IMovie) => (
             <SwiperSlide key={movie.id}>
-              <HeroCard movie={movie} />
+              <HeroCard movie={movie} type={type} />
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
       <div className="w-full space-y-4">
         <div className="w-full cursor-pointer">
-          <h1 className="text-3xl tracking-widest">
-            Top <span className="text-primary">10</span> Movies
+          <h1 className="text-3xl capitalize tracking-widest">
+            Top <span className="text-primary">10</span> {type}
+            {type === "movie" ? "s" : ""}
           </h1>
         </div>
-        <TopMoviesSwiper movies={movies} />
+        <TopMoviesSwiper movies={movies} type={type} />
       </div>
       <div className="w-full space-y-4">
         <div className="w-full cursor-pointer">
-          <h1 className="text-3xl tracking-widest">
-            Top <span className="text-primary">Rated</span> Movies
+          <h1 className="text-3xl capitalize tracking-widest">
+            Top <span className="text-primary">Rated</span> {type}
+            {type === "movie" ? "s" : ""}
           </h1>
         </div>
-        <TopMoviesSwiper movies={ratedMovies} />
+        <TopMoviesSwiper movies={ratedMovies} type={type} />
       </div>
     </motion.div>
   )

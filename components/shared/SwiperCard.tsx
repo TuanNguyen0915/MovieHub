@@ -5,8 +5,9 @@ import { IMovie } from "@/lib/types"
 import "swiper/css"
 interface IProps {
   movies: IMovie[] | null
+  type: string
 }
-const SwiperCard = ({ movies }: IProps) => {
+const SwiperCard = ({ movies, type }: IProps) => {
   return (
     <Swiper
       loop
@@ -36,7 +37,7 @@ const SwiperCard = ({ movies }: IProps) => {
                 className="flexCenter relative h-[200px] w-full overflow-hidden"
                 key={movie.id}
               >
-                <MovieCard movie={movie} />
+                <MovieCard movie={movie} type={type} />
               </div>
               {title && (
                 <p className="text-muted-foreground transition-all">

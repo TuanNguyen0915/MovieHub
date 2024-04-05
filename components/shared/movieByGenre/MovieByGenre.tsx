@@ -12,23 +12,31 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import SwiperCard from "../SwiperCard"
+import { getTvShowsByGenre } from "@/lib/services/tvShow.service"
 interface IProps {
   genre: {
     id: number
     name: string
   }
   idx: number
+  type: string
 }
 
-const MovieByGenre = ({ genre, idx }: IProps) => {
+const MovieByGenre = ({ genre, idx, type }: IProps) => {
   const [movies, setMovies] = useState<IMovie[] | null>(null)
   const [transition, setTransition] = useTransition()
   useEffect(() => {
     setTransition(async () => {
-      const data = await getMoviesByGenre(genre.id)
-      setMovies(data)
+      if (type === "movie") {
+        const data = await getMoviesByGenre(genre.id)
+        setMovies(data)
+      }
+      if (type === "tv-shows") {
+        const data = await getTvShowsByGenre(genre.id)
+        setMovies(data)
+      }
     })
-  }, [genre.id])
+  }, [genre.id, type])
   if (transition) {
     return (
       <div className="flexCenter w-full">
@@ -46,15 +54,16 @@ const MovieByGenre = ({ genre, idx }: IProps) => {
                 <span className="text-primary transition-all group-hover:brightness-125">
                   {genre.name}
                 </span>{" "}
-                Movies
+                {type}
+                {type === "movie" && "s"}
               </h1>
             </div>
           </AccordionTrigger>
           <AccordionContent>
             <div className="w-full">
-              <SwiperCard movies={movies} />
+              <SwiperCard movies={movies} type={type}/>
               <Link
-                href={`/genre/${genre.name}`}
+                href={`/${type}/genre/${genre.name}`}
                 className="mt-4 tracking-wider text-muted-foreground transition-all hover:text-primary lg:mt-10 lg:text-xl"
               >
                 See more ...

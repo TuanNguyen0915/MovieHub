@@ -24,7 +24,7 @@ const HomePage = () => {
       Promise.all([fetch10Movies(), fetchRatedMovies()])
     }
     fetchData()
-  }, [setTop10Movies])
+  }, [setTop10Movies, setTop10RatedMovies])
   if (!top10Movies || !top10RatedMovies) {
     return (
       <div className="space-y-10">
@@ -35,10 +35,19 @@ const HomePage = () => {
   } else {
     return (
       <div className="flexCol gap-10">
-        <Hero movies={top10Movies} ratedMovies={top10RatedMovies} />
+        <Hero
+          movies={top10Movies}
+          ratedMovies={top10RatedMovies}
+          type="movie"
+        />
         <div className="flexCol gap-10">
           {genres.map((genre, idx) => (
-            <MovieByGenre key={genre.id} genre={genre} idx={idx + 1} />
+            <MovieByGenre
+              key={genre.id}
+              genre={genre}
+              idx={idx + 1}
+              type="movie"
+            />
           ))}
         </div>
       </div>

@@ -17,7 +17,7 @@ const MobileNav = () => {
         </div>
       </SheetTrigger>
       <SheetContent>
-        <div className="flexCol h-full w-full gap-10 p-4 mt-10">
+        <div className="flexCol h-full w-full gap-10 pt-20">
           <div className="flexBetween w-full gap-2 rounded-full border border-muted-foreground/60 px-4 py-2 opacity-80">
             <Search />
             <input
@@ -39,7 +39,9 @@ const MobileNav = () => {
               )
             })}
           </div>
-          <Button variant={"custom"}>Subscribe Now</Button>
+          <Button variant={"custom"} >
+            Subscribe Now
+          </Button>
         </div>
       </SheetContent>
     </Sheet>

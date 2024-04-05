@@ -16,16 +16,16 @@ import { useRouter } from "next/navigation"
 
 const GenrePage = ({ params }: { params: IParams }) => {
   const router = useRouter()
-  const { genreName } = params
+  let { genreName } = params
+  for (const i of ["%20", "%26"]) {
+    genreName = genreName.replace(i, " ")
+  }
   const [movies, setMovies] = useState<IMovie[] | null>(null)
   const [transition, setTransition] = useTransition()
   const [searchTerm, setSearchTerm] = useState("")
   useEffect(() => {
     setTransition(async () => {
       const genreId = genres.find((genre) => genre.name === genreName)?.id
-      if (!genreId) {
-        return router.push("/")
-      }
       const fetchMovies = async () => {
         const data = await getMoviesByGenre(genreId)
         setMovies(data)
@@ -68,7 +68,7 @@ const GenrePage = ({ params }: { params: IParams }) => {
         transition={{ duration: 2 }}
       >
         <div className="flex w-full items-center gap-2">
-          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} type="movie"/>
         </div>
         <h1 className="group text-3xl text-primary transition-all hover:text-foreground">
           {genreName}{" "}
@@ -85,7 +85,7 @@ const GenrePage = ({ params }: { params: IParams }) => {
                 key={movie.id}
               >
                 <div className="relative h-[300px] w-full overflow-hidden rounded-lg">
-                  <MovieCard movie={movie} />
+                  <MovieCard movie={movie} type="movie"/>
                 </div>
                 <p className="cursor-pointer text-center text-muted-foreground transition-all group-hover:text-foreground">
                   {movie.name || movie.title || movie.original_name}

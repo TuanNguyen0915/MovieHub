@@ -7,6 +7,7 @@ import { genres } from "@/lib/constant"
 import { useState } from "react"
 import { getMovieVideo } from "@/lib/services/movie.service"
 import { Button } from "@/components/ui/button"
+import { getTvShowVideo } from "@/lib/services/tvShow.service"
 
 interface IGenre {
   name: string | undefined
@@ -22,14 +23,22 @@ interface ITrailer {
   official?: boolean
   id?: string
 }
-const HeroCard = ({ movie }: { movie: IMovie }) => {
+const HeroCard = ({ movie, type }: { movie: IMovie; type: string }) => {
   const [trailer, setTrailer] = useState<ITrailer | null>()
   const [playTrailer, setPlayTrailer] = useState(false)
   const fetchTrailer = async () => {
-    const data = await getMovieVideo(movie.id)
-    const res = data.find((item: any) => item.type === "Trailer")
-    setTrailer(res)
+    if (type === "movie") {
+      const data = await getMovieVideo(movie.id)
+      const res = data.find((item: any) => item.type === "Trailer")
+      setTrailer(res)
+    } else {
+      const data = await getTvShowVideo(movie.id)
+      const res = data.find((item: any) => item.type === "Trailer")
+      setTrailer(res)
+    }
+
     setPlayTrailer(true)
+    window.scrollTo({ top: 0, behavior: "smooth" })
   }
   const src = `https://image.tmdb.org/t/p/original/${movie.backdrop_path || movie.poster_path}`
   const movieName = movie.name || movie.title || movie.original_name
@@ -53,7 +62,7 @@ const HeroCard = ({ movie }: { movie: IMovie }) => {
         />
         <div className="absolute z-20 flex h-full w-full justify-between bg-gradient-to-r from-indigo-950/80 via-black/80 to-indigo-950/80 p-8">
           <div className="w-full space-y-8">
-            <h1 className="mt-20 w-fit text-4xl font-bold text-primary brightness-150 lg:mt-36 lg:text-6xl">
+            <h1 className="mt-10 w-fit text-4xl font-bold text-primary brightness-150 lg:mt-36 lg:text-6xl">
               {movieName}
             </h1>
 
@@ -61,17 +70,17 @@ const HeroCard = ({ movie }: { movie: IMovie }) => {
               <span>{movie.overview?.slice(0, 200)}</span>
               <br />
               <Link
-                href={`/movie/${movie.id}`}
+                href={`/${type}/${movie.id}`}
                 className="font-semibold tracking-wider text-primary transition-all group-hover:brightness-200"
               >
                 ...read more
               </Link>
-              <div className="mt-20 w-full space-x-4 lg:hidden">
+              <div className="m-10 w-full space-x-4 lg:hidden">
                 <Button variant="default" onClick={fetchTrailer}>
                   Play Trailer
                 </Button>
                 <Button variant="secondary">
-                  <Link href={`/movie/${movie.id}`}>More Details</Link>
+                  <Link href={`/${type}/${movie.id}`}>More Details</Link>
                 </Button>
               </div>
             </div>
@@ -80,7 +89,10 @@ const HeroCard = ({ movie }: { movie: IMovie }) => {
               <div className="flex gap-2">
                 {genresListName.map((genre: IGenre, idx) => (
                   <div key={idx}>
-                    <Link href={`/movie/genre/${genre.id}`} className="flex">
+                    <Link
+                      href={`/${type}/genre/${genre.name}`}
+                      className="flex"
+                    >
                       <span className="transition-all hover:text-primary">
                         {genre.name}{" "}
                       </span>
@@ -94,17 +106,19 @@ const HeroCard = ({ movie }: { movie: IMovie }) => {
                 ))}
               </div>
             </div>
-            <p className="space-x-2 font-bold text-primary max-lg:hidden">
-              Release Date{" "}
-              <span className="font-normal italic text-foreground">
-                {movie.release_date}
-              </span>
-            </p>
+            {movie.release_date && (
+              <p className="space-x-2 font-bold text-primary max-lg:hidden">
+                Release Date{" "}
+                <span className="font-normal italic text-foreground">
+                  {movie.release_date}
+                </span>
+              </p>
+            )}
             <Button
               variant="custom"
               className="mt-20 p-4 text-xl font-semibold max-lg:hidden"
             >
-              <Link href={`/movie/${movie.id}`}>View Details</Link>
+              <Link href={`/${type}/${movie.id}`}>View Details</Link>
             </Button>
           </div>
           {/* PLAY TRAILER */}
@@ -113,7 +127,7 @@ const HeroCard = ({ movie }: { movie: IMovie }) => {
               className="flexCenter group w-full gap-4"
               onClick={fetchTrailer}
             >
-              <PlayCircleIcon className="group-hover:animate-custom-spin size-28 transition-all duration-1000 group-hover:text-primary group-hover:brightness-150" />
+              <PlayCircleIcon className="size-28 transition-all duration-1000 group-hover:animate-custom-spin group-hover:text-primary group-hover:brightness-150" />
               <h1 className="text-3xl font-bold text-muted-foreground group-hover:animate-pulse group-hover:text-foreground">
                 Play trailer
               </h1>

@@ -1,7 +1,7 @@
 import LoadingCard from "@/components/shared/LoadingCard"
 import MovieDetails from "@/components/shared/movieDetails/MovieDetails"
 import { getMovieById } from "@/lib/services/movie.service"
-import { IMovie, IMovieDetails } from "@/lib/types"
+import { IMovieDetails } from "@/lib/types"
 
 interface IParams {
   movieId: string | number

@@ -4,8 +4,9 @@ import MovieCard from "../MovieCard"
 interface IProps {
   movie: IMovie
   idx?: number
+  type: string
 }
-const TopMovieCard = ({ movie, idx }: IProps) => {
+const TopMovieCard = ({ movie, idx, type }: IProps) => {
   return (
     <div className="flexCenter w-full">
       <div className="relative h-[200px] w-[300px]">
@@ -16,7 +17,7 @@ const TopMovieCard = ({ movie, idx }: IProps) => {
         </div>
         <div className="group absolute right-0 z-10 h-full w-[200px] rounded-lg transition-all duration-300 hover:w-full">
           <div className="relative h-[200px] w-full overflow-hidden rounded-lg border-l-2 border-transparent transition-all duration-300 group-hover:w-full group-hover:border-primary">
-            <MovieCard movie={movie} topMovies/>
+            <MovieCard movie={movie} topMovies type={type} />
           </div>
         </div>
       </div>

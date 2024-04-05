@@ -9,9 +9,10 @@ import TopMovieCard from "./TopMovieCard"
 
 interface IProps {
   movies: IMovie[]
+  type: string
 }
 
-const TopMoviesSwiper = ({ movies }: IProps) => {
+const TopMoviesSwiper = ({ movies, type }: IProps) => {
   return (
     <Swiper
       navigation
@@ -36,7 +37,7 @@ const TopMoviesSwiper = ({ movies }: IProps) => {
     >
       {movies.map((movie: IMovie, idx) => (
         <SwiperSlide key={movie.id}>
-          <TopMovieCard movie={movie} idx={idx + 1} />
+          <TopMovieCard movie={movie} idx={idx + 1} type={type}/>
         </SwiperSlide>
       ))}
     </Swiper>

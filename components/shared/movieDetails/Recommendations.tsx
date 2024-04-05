@@ -6,16 +6,27 @@ import Link from "next/link"
 import { useEffect, useState, useTransition } from "react"
 import LoadingCard from "../LoadingCard"
 import { motion } from "framer-motion"
+import { getRecommendedTvShows } from "@/lib/services/tvShow.service"
 
-const Recommendations = ({ movieId }: { movieId: number | undefined }) => {
+interface IProps {
+  movieId: number | undefined
+  type: string
+}
+
+const Recommendations = ({ movieId, type }: IProps) => {
   const [recommendations, setRecommendations] = useState<IMovie[] | []>()
   const [transitioning, setTransition] = useTransition()
   useEffect(() => {
     setTransition(async () => {
-      const data = await getRecommendedMovies(movieId)
-      setRecommendations(data)
+      if (type === "tv-shows") {
+        const data = await getRecommendedTvShows(movieId)
+        setRecommendations(data)
+      } else {
+        const data = await getRecommendedMovies(movieId)
+        setRecommendations(data)
+      }
     })
-  }, [movieId])
+  }, [movieId, type])
   if (transitioning || !recommendations) {
     return (
       <div className="w-full space-y-10">
@@ -36,10 +47,10 @@ const Recommendations = ({ movieId }: { movieId: number | undefined }) => {
           Recommendations
         </h1>
 
-        <div className="flexBetween mt-5 w-full flex-wrap gap-4 lg:mt-10 p-2">
+        <div className="flexBetween mt-5 w-full flex-wrap gap-4 p-2 lg:mt-10">
           {recommendations.slice(0, 10).map((movie: IMovie) => (
             <Link
-              href={`/movie/${movie.id}`}
+              href={`/${type}/${movie.id}`}
               key={movie.id}
               className="flexCol group h-[200px] w-[150px] gap-2 lg:h-[250px] lg:w-[200px]"
             >

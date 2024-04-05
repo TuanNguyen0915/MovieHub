@@ -9,16 +9,28 @@ import { Pagination } from "swiper/modules"
 import Image from "next/image"
 import { User2 } from "lucide-react"
 import Link from "next/link"
+import { getTvShowReviews } from "@/lib/services/tvShow.service"
 
-const Reviews = ({ movieId }: { movieId: number | undefined }) => {
+const Reviews = ({
+  movieId,
+  type,
+}: {
+  movieId: number | undefined
+  type?: string
+}) => {
   const [reviews, setReviews] = useState<IReview[] | []>([])
   const [transitioning, setTransition] = useTransition()
   useEffect(() => {
     setTransition(async () => {
-      const data = await getMovieReviews(movieId)
-      setReviews(data)
+      if (type === "tv-shows") {
+        const data = await getTvShowReviews(movieId)
+        setReviews(data)
+      } else {
+        const data = await getMovieReviews(movieId)
+        setReviews(data)
+      }
     })
-  }, [movieId])
+  }, [movieId, type])
 
   if (transitioning || !reviews) {
     return (
@@ -30,7 +42,7 @@ const Reviews = ({ movieId }: { movieId: number | undefined }) => {
   } else {
     return (
       <motion.div
-        initial={{ opacity: 0, y: -100 }}
+        initial={{ opacity: 0, y: 100 }}
         whileInView={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 100 }}
         transition={{ duration: 1 }}

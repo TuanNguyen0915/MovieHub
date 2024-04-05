@@ -1,31 +1,27 @@
 "use client"
-import { getMovieCasts, getMovieVideo } from "@/lib/services/movie.service"
-import { ICast, IMovieDetails, IVideo } from "@/lib/types"
+import { ICast, ITvShowDetails, IVideo } from "@/lib/types"
+import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import MovieInfo from "./MovieInfo"
-import { ArrowRight } from "lucide-react"
-import MoreDetails from "./MoreDetails"
-import Recommendations from "./Recommendations"
-import Reviews from "./Reviews"
+import MoreDetails from "../movieDetails/MoreDetails"
+import Reviews from "../movieDetails/Reviews"
+import Recommendations from "../movieDetails/Recommendations"
+import { getTvShowCasts, getTvShowVideo } from "@/lib/services/tvShow.service"
+import TvShowInfo from "./TvShowInfo"
 
 interface IProps {
-  movie: IMovieDetails | undefined
-  times: {
-    hours: number
-    minutes: number
-  }
+  tvShow: ITvShowDetails | undefined
 }
-
-const MovieDetails = ({ movie, times }: IProps) => {
-  const src = `https://image.tmdb.org/t/p/original/${movie?.poster_path || movie?.backdrop_path}`
+const TvShowDetails = ({ tvShow }: IProps) => {
+  const src = `https://image.tmdb.org/t/p/original/${tvShow?.poster_path || tvShow?.backdrop_path}`
   const [videos, setVideos] = useState<IVideo[] | []>()
   const [trailer, setTrailer] = useState<IVideo | undefined>()
   const [isMoreOpen, setMoreOpen] = useState(false)
   const [casts, setCasts] = useState<ICast[] | []>()
+
   useEffect(() => {
     const fetchVideos = async () => {
-      const data = await getMovieVideo(movie?.id)
+      const data = await getTvShowVideo(tvShow?.id)
       setVideos(data)
       const trailer = data.find(
         (item: any) => item.type === "Trailer" && item.site === "YouTube",
@@ -33,11 +29,12 @@ const MovieDetails = ({ movie, times }: IProps) => {
       setTrailer(trailer)
     }
     const fetchCast = async () => {
-      const data = await getMovieCasts(movie?.id)
+      const data = await getTvShowCasts(tvShow?.id)
       setCasts(data)
     }
     Promise.all([fetchVideos(), fetchCast()])
-  }, [movie?.id])
+  }, [tvShow?.id])
+
   return (
     <section className="mt-5 min-h-screen w-full space-y-5">
       <div className="flexBetween max-xl:flexCol h-full w-full gap-10">
@@ -45,7 +42,7 @@ const MovieDetails = ({ movie, times }: IProps) => {
           <Image
             src={src}
             fill
-            className="relative rounded-lg object-cover object-center opacity-0 transition-all duration-1000"
+            className="relative rounded-lg object-contain opacity-0 transition-all duration-1000"
             onLoadingComplete={(image) => {
               image.classList.remove("opacity-0")
             }}
@@ -64,7 +61,7 @@ const MovieDetails = ({ movie, times }: IProps) => {
             }}
           />
         </div>
-        <MovieInfo movie={movie} times={times} trailer={trailer} />
+        <TvShowInfo tvShow={tvShow} trailer={trailer} />
       </div>
       <div className="flexCenter mt-10 w-full">
         <div
@@ -79,13 +76,11 @@ const MovieDetails = ({ movie, times }: IProps) => {
           />
         </div>
       </div>
-      {isMoreOpen && (
-        <MoreDetails movie={movie} videos={videos} casts={casts} />
-      )}
-      <Reviews movieId={movie?.id && movie?.id} />
-      <Recommendations movieId={movie?.id && movie?.id} type="movie" />
+      {isMoreOpen && <MoreDetails movie={tvShow} videos={videos} casts={casts} />}
+      <Reviews movieId={tvShow?.id && tvShow?.id} type="tv-shows" />
+      <Recommendations movieId={tvShow?.id && tvShow?.id} type="tv-shows" />
     </section>
   )
 }
 
-export default MovieDetails
+export default TvShowDetails
