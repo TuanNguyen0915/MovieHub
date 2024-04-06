@@ -63,7 +63,7 @@ const GenrePage = ({ params }: { params: IParams }) => {
       <motion.div
         className="mt-10 w-full space-y-8"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        whileInView={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 2 }}
       >
