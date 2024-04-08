@@ -8,6 +8,7 @@ import { useState } from "react"
 import emailjs from "@emailjs/browser"
 import toast, { Toaster } from "react-hot-toast"
 import Image from "next/image"
+import { motion } from "framer-motion"
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -71,13 +72,19 @@ const ContactPage = () => {
             together, please don't hesitate to reach out to me. I'm always
             looking for new opportunities to learn and grow.
           </p>
-          <h1 className="tracking-wide my-12 mb-6 text-center text-6xl font-bold max-lg:text-center xl:text-[72px] xl:leading-[80px]">
+          <h1 className="my-12 mb-6 text-center text-6xl font-bold tracking-wide max-lg:text-center xl:text-[72px] xl:leading-[80px]">
             Let's work together
           </h1>
         </div>
         {/* FORM */}
         <div className="flex w-full items-center justify-between gap-8">
-          <form onSubmit={handleSubmit} className="flex w-full flex-col gap-8">
+          <motion.form
+            initial={{ opacity: 0, y: 300 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5 }}
+            onSubmit={handleSubmit}
+            className="flex w-full flex-col gap-8"
+          >
             <div className="group flex w-full items-center gap-4">
               <User
                 className={`${formData.name ? "size-10" : "size-0"} transition-all duration-500 group-hover:size-10`}
@@ -131,15 +138,15 @@ const ContactPage = () => {
                 </>
               )}
             </Button>
-          </form>
-          <div className="relative h-[500px] w-full max-lg:hidden">
-            <Image
-            alt="contact"
-            fill
-            src="/contact/illustration-dark.svg"
-            />
-
-          </div>
+          </motion.form>
+          <motion.div
+            initial={{ opacity: 0, x: 300 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.5 }}
+            className="relative h-[500px] w-full max-lg:hidden"
+          >
+            <Image alt="contact" fill src="/contact/illustration-dark.svg" />
+          </motion.div>
         </div>
       </div>
     </section>

@@ -6,10 +6,10 @@ import { motion } from "framer-motion"
 const Footer = () => {
   return (
     <motion.footer
-      initial={{ opacity: 0, x: 100 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0}}
+      whileInView={{ opacity: 1, }}
       exit={{ opacity: 0, x: -100 }}
-      transition={{ duration: 2 }}
+      transition={{ duration: 3 }}
       className="flexCol w-full items-center space-y-8 rounded-t-xl border-t-4 border-border py-4"
     >
       <p
@@ -24,7 +24,7 @@ const Footer = () => {
             const Icon: IconType = icon.icon
             return (
               <Link key={idx} href={icon.path} target="_blank">
-                <Icon className="size-6 transition-all hover:text-primary hover:brightness-125 md:size-10" />
+                <Icon className="size-6 transition-all text-primary hover:brightness-150 md:size-10" />
               </Link>
             )
           })}
