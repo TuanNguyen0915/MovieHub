@@ -16,7 +16,7 @@ interface IProps {
 const TvShowInfo = ({ tvShow, trailer, season }: IProps) => {
   const [openTrailer, setOpenTrailer] = useState(false)
   return (
-    <div className="flexCol gap-10 p-2">
+    <div className="flexCol gap-10 p-2 z-20">
       <Link href={`/tv-shows/${tvShow?.id}`}>
         <h1 className="cursor-pointer text-3xl font-extrabold tracking-wider text-primary transition-all hover:brightness-125 lg:text-5xl">
           {tvShow?.name || tvShow?.original_name}{" "}

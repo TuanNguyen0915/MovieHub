@@ -19,6 +19,8 @@ interface IProps {
 
 const MovieDetails = ({ movie, times }: IProps) => {
   const src = `https://image.tmdb.org/t/p/original/${movie?.poster_path || movie?.backdrop_path}`
+  const src2 = `https://image.tmdb.org/t/p/original/${movie?.backdrop_path || movie?.poster_path}`
+  
   const [videos, setVideos] = useState<IVideo[] | []>()
   const [trailer, setTrailer] = useState<IVideo | undefined>()
   const [isMoreOpen, setMoreOpen] = useState(false)
@@ -40,8 +42,8 @@ const MovieDetails = ({ movie, times }: IProps) => {
   }, [movie?.id])
   return (
     <section className="mt-5 min-h-screen w-full space-y-5">
-      <div className="flexBetween max-xl:flexCol h-full w-full gap-10">
-        <div className="relative h-[60vh] w-full max-xl:hidden">
+      <div className="flexBetween max-xl:flexCol relative h-full w-full gap-10">
+        <div className="relative h-[60vh] w-full max-xl:hidden z-20">
           <Image
             src={src}
             fill
@@ -52,7 +54,7 @@ const MovieDetails = ({ movie, times }: IProps) => {
             alt="movie"
           />
         </div>
-        <div className="flexCenter w-1/2 xl:hidden">
+        <div className="flexCenter w-1/2 xl:hidden z-20">
           <Image
             src={src}
             width={2000}
@@ -65,6 +67,16 @@ const MovieDetails = ({ movie, times }: IProps) => {
           />
         </div>
         <MovieInfo movie={movie} times={times} trailer={trailer} />
+        <div className="absolute left-0 top-0 h-full w-full">
+          <div className="relative h-full w-full">
+            <Image
+            fill
+            src={src2}
+            alt="movie"
+            className="opacity-10"
+            />
+          </div>
+        </div>
       </div>
       <div className="flexCenter mt-10 w-full">
         <div

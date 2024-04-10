@@ -14,6 +14,7 @@ interface IProps {
 }
 const TvShowDetails = ({ tvShow }: IProps) => {
   const src = `https://image.tmdb.org/t/p/original/${tvShow?.poster_path || tvShow?.backdrop_path}`
+  const src2 = `https://image.tmdb.org/t/p/original/${tvShow?.backdrop_path || tvShow?.poster_path}`
   const [videos, setVideos] = useState<IVideo[] | []>()
   const [trailer, setTrailer] = useState<IVideo | undefined>()
   const [isMoreOpen, setMoreOpen] = useState(false)
@@ -37,8 +38,8 @@ const TvShowDetails = ({ tvShow }: IProps) => {
 
   return (
     <section className="mt-5 min-h-screen w-full space-y-5">
-      <div className="flexBetween max-xl:flexCol h-full w-full gap-10">
-        <div className="relative h-[60vh] w-full max-xl:hidden">
+      <div className="flexBetween max-xl:flexCol h-full w-full gap-10 relative">
+        <div className="relative h-[60vh] w-full max-xl:hidden z-20">
           <Image
             src={src}
             fill
@@ -49,7 +50,7 @@ const TvShowDetails = ({ tvShow }: IProps) => {
             alt="movie"
           />
         </div>
-        <div className="flexCenter w-1/2 xl:hidden">
+        <div className="flexCenter w-1/2 xl:hidden z-20">
           <Image
             src={src}
             width={2000}
@@ -62,6 +63,16 @@ const TvShowDetails = ({ tvShow }: IProps) => {
           />
         </div>
         <TvShowInfo tvShow={tvShow} trailer={trailer} />
+        <div className="absolute left-0 top-0 h-full w-full">
+          <div className="relative h-full w-full">
+            <Image
+            fill
+            src={src2}
+            alt="movie"
+            className="opacity-10"
+            />
+          </div>
+        </div>
       </div>
       <div className="flexCenter mt-10 w-full">
         <div

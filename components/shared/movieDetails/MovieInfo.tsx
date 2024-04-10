@@ -12,13 +12,12 @@ interface IProps {
     minutes: number
   }
   trailer: IVideo | undefined
- 
 }
 
 const MovieInfo = ({ movie, times, trailer }: IProps) => {
   const [openTrailer, setOpenTrailer] = useState(false)
   return (
-    <div className="flexCol gap-10 p-2">
+    <div className="flexCol z-20 gap-10 p-2">
       <h1 className="cursor-pointer text-3xl font-extrabold tracking-wider text-primary transition-all hover:brightness-125 lg:text-5xl">
         {movie?.title}
       </h1>
@@ -40,7 +39,7 @@ const MovieInfo = ({ movie, times, trailer }: IProps) => {
           className="w-1/2 lg:py-6 lg:text-xl"
           onClick={() => {
             setOpenTrailer(true)
-          window.scrollTo({ top: 0, behavior: "smooth" })
+            window.scrollTo({ top: 0, behavior: "smooth" })
           }}
         >
           <>
