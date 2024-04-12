@@ -63,16 +63,16 @@ const HeroCard = ({ movie, type }: { movie: IMovie; type: string }) => {
         />
         <div className="absolute z-20 flex h-full w-full justify-between bg-gradient-to-r from-indigo-950/80 via-black/80 to-indigo-950/80 p-8">
           <div className="w-full space-y-8">
-            <h1 className="mt-10 w-fit text-4xl font-bold text-primary brightness-150 lg:mt-36 lg:text-6xl">
+            <h1 className="mt-4 w-fit text-2xl font-bold text-primary brightness-150 lg:mt-36 lg:text-6xl">
               {movieName}
             </h1>
 
             <div className="group w-full text-sm text-muted-foreground lg:text-lg">
-              <span>{movie.overview?.slice(0, 200)}</span>
+              <span className="max-md:hidden">{movie.overview?.slice(0, 200)}</span>
               <br />
               <Link
                 href={`/${type}/${movie.id}`}
-                className="font-semibold tracking-wider text-primary transition-all group-hover:brightness-200"
+                className="font-semibold tracking-wider text-primary transition-all group-hover:brightness-200 max-md:hidden"
               >
                 ...read more
               </Link>

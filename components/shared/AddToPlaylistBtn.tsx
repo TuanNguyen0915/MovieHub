@@ -50,7 +50,7 @@ const AddToPlaylistBtn = ({ type, movieId, movieImg, movieName }: IProps) => {
   return (
     <Button
       variant={"outline"}
-      className={`${isInclude ? "text-sm" : "text-lg"} w-44 border-primary bg-transparent p-4 font-semibold backdrop-blur-lg`}
+      className={`${isInclude ? "text-sm" : "text-md"} w-44 border-primary bg-transparent p-4 font-semibold backdrop-blur-lg`}
       onClick={handleAddMovie}
     >
       {isInclude ? "Remove from playlist" : "Add to playlist"}
