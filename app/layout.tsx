@@ -4,7 +4,7 @@ import "./globals.css"
 import NextThemes from "@/components/shared/providers/NextThemes"
 import { Toaster } from "react-hot-toast"
 import AuthProvider from "@/components/shared/providers/AuthProvider"
-import { getServerSession } from "next-auth"
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
@@ -23,14 +23,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const session = await getServerSession()
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${poppins.className} mx-auto min-h-screen max-w-[1920px] px-1`}
         suppressHydrationWarning
       >
-        <AuthProvider session={session}>
+        <AuthProvider >
           <NextThemes
             attribute="class"
             defaultTheme="dark"
