@@ -1,4 +1,5 @@
-import React from "react"
+"use client"
+import { useSession } from "next-auth/react"
 import { Button } from "../ui/button"
 
 const AddToPlaylistBtn = () => {

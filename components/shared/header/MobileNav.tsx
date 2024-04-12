@@ -1,22 +1,18 @@
 "use client"
-import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { navLinks } from "@/lib/constant"
-import { User } from "@prisma/client"
-import { Menu, Search, User2 } from "lucide-react"
-import Image from "next/image"
+import { Menu, Search } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import React from "react"
 import SignInButton from "./SignInButton"
 import UserButton from "./UserButton"
 import SignOutButton from "./SignOutButton"
-const MobileNav = ({
-  currentUser,
-}: {
-  currentUser: User | undefined | null
-}) => {
+import { useUserStore } from "@/lib/stores/user.store"
+const MobileNav = () => {
   const pathname = usePathname()
+  const { currentUser } = useUserStore()
+
   return (
     <div className="flex items-center gap-4">
       <Sheet>

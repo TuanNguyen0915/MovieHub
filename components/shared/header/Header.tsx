@@ -7,8 +7,10 @@ import { User } from "@prisma/client"
 import UserButton from "./UserButton"
 import PopUser from "./PopUser"
 import SignInButton from "./SignInButton"
+import { useUserStore } from "@/lib/stores/user.store"
 
-const Header = ({ currentUser }: { currentUser?: User | undefined | null }) => {
+const Header = () => {
+  const {currentUser} = useUserStore()
   return (
     <header className="flexBetween sticky left-0 right-0 top-0 z-50 bg-black/40 py-6 backdrop-blur-md max-xl:px-4">
       <div className="flex items-center gap-10">
@@ -21,7 +23,7 @@ const Header = ({ currentUser }: { currentUser?: User | undefined | null }) => {
         {currentUser ? <PopUser currentUser={currentUser} /> : <SignInButton />}
       </div>
       <div className="flex lg:hidden">
-        <MobileNav currentUser={currentUser} />
+        <MobileNav />
       </div>
     </header>
   )
