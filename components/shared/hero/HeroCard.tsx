@@ -8,6 +8,7 @@ import { useState } from "react"
 import { getMovieVideo } from "@/lib/services/movie.service"
 import { Button } from "@/components/ui/button"
 import { getTvShowVideo } from "@/lib/services/tvShow.service"
+import AddToPlaylistBtn from "../AddToPlaylistBtn"
 
 interface IGenre {
   name: string | undefined
@@ -75,13 +76,19 @@ const HeroCard = ({ movie, type }: { movie: IMovie; type: string }) => {
               >
                 ...read more
               </Link>
-              <div className="m-10 w-full space-x-4 lg:hidden">
-                <Button variant="default" onClick={fetchTrailer}>
-                  Play Trailer
-                </Button>
-                <Button variant="secondary">
-                  <Link href={`/${type}/${movie.id}`}>More Details</Link>
-                </Button>
+
+              <div className="mt-10 w-full space-y-4 lg:hidden">
+                <div className="space-x-4">
+                  <Button variant="default" onClick={fetchTrailer}>
+                    Play Trailer
+                  </Button>
+                  <Button variant="secondary">
+                    <Link href={`/${type}/${movie.id}`}>More Details</Link>
+                  </Button>
+                </div>
+                <div className="w-full max-lg:hidden">
+                  <AddToPlaylistBtn />
+                </div>
               </div>
             </div>
             <div className="flex w-full gap-2 max-lg:hidden">
@@ -116,10 +123,12 @@ const HeroCard = ({ movie, type }: { movie: IMovie; type: string }) => {
             )}
             <Button
               variant="custom"
-              className="mt-20 p-4 text-xl font-semibold max-lg:hidden"
+              className="mt-20 w-44 p-4 text-lg font-semibold max-lg:hidden mr-4"
             >
               <Link href={`/${type}/${movie.id}`}>View Details</Link>
             </Button>
+
+            <AddToPlaylistBtn />
           </div>
           {/* PLAY TRAILER */}
           <div className="flexCenter w-full max-lg:hidden">

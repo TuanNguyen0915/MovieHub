@@ -62,6 +62,7 @@ const MoreDetails = ({ movie, videos, casts }: IProps) => {
                     className="h-full w-full"
                   ></iframe>
                 </div>
+                
               </div>
             </SwiperSlide>
           ))}

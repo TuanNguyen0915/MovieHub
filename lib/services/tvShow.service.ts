@@ -3,20 +3,20 @@ import { OPTIONS } from "./movie.service"
 
 export const getAllTvShows = async () => {
   const url =
-    "https://api.themoviedb.org/3/trending/tv/week?language=en-US&include_adult=true"
+    "https://api.themoviedb.org/3/trending/tv/week?language=en-US&include_adult=false"
   const { data } = await axios.get(url, OPTIONS)
   return data.results
 }
 
 export const getRateTvShows = async () => {
   const url =
-    "https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1&include_adult=true"
+    "https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1&include_adult=false"
   const { data } = await axios.get(url, OPTIONS)
   return data.results
 }
 
 export const getTvShowsByGenre = async (genreId: any) => {
-  const url = `https://api.themoviedb.org/3/discover/tv?include_adult=true&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genreId}`
+  const url = `https://api.themoviedb.org/3/discover/tv?include_adult=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genreId}`
   const { data } = await axios.get(url, OPTIONS)
   return data.results
 }

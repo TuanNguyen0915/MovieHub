@@ -25,7 +25,6 @@ const GenrePage = ({ params }: { params: IParams }) => {
   useEffect(() => {
     setTransition(async () => {
       const genreId = genresTvShow.find((genre) => genre.name === genreName)?.id
-      console.log(genreId)
       const fetchMovies = async () => {
         const data = await getTvShowsByGenre(genreId)
         setMovies(data)
