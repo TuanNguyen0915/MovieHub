@@ -10,6 +10,28 @@ export const getCurrentUser = async (userEmail: string) => {
   return user
 }
 
+export const removeMovieFromPlaylist = async (
+  userEmail: string,
+  movieId: number,
+) => {
+  let user = await prisma.user.findUnique({
+    where: {
+      email: userEmail,
+    },
+  })
+  user = await prisma.user.update({
+    where: {
+      email: userEmail,
+    },
+    data: {
+      movies: {
+        set: user?.movies.filter((item) => item.id !== movieId),
+      },
+    },
+  })
+  return user
+}
+
 export const addMovieToPlaylist = async (
   userEmail: string,
   movieId: number,
@@ -24,16 +46,7 @@ export const addMovieToPlaylist = async (
 
   const isInclude = user?.movies.find((item) => item.id === movieId)
   if (isInclude) {
-    user = await prisma.user.update({
-      where: {
-        email: userEmail,
-      },
-      data: {
-        movies: {
-          set: user?.movies.filter((item) => item.id !== movieId),
-        },
-      },
-    })
+    user = await removeMovieFromPlaylist(userEmail, movieId)
   } else {
     user = await prisma.user.update({
       where: {
@@ -44,7 +57,7 @@ export const addMovieToPlaylist = async (
           push: {
             id: movieId,
             name: movieName,
-            movieImg: movieImg,
+            image: movieImg.replace("original", "w500"),
           },
         },
       },
@@ -53,6 +66,27 @@ export const addMovieToPlaylist = async (
   return user
 }
 
+export const removeTvShowFromPlaylist = async (
+  userEmail: string,
+  movieId: number,
+) => {
+  let user = await prisma.user.findUnique({
+    where: {
+      email: userEmail,
+    },
+  })
+  user = await prisma.user.update({
+    where: {
+      email: userEmail,
+    },
+    data: {
+      tvShows: {
+        set: user?.tvShows.filter((item) => item.id !== movieId),
+      },
+    },
+  })
+  return user
+}
 
 export const addTvShowToPlaylist = async (
   userEmail: string,
@@ -68,16 +102,7 @@ export const addTvShowToPlaylist = async (
 
   const isInclude = user?.tvShows.find((item) => item.id === movieId)
   if (isInclude) {
-    user = await prisma.user.update({
-      where: {
-        email: userEmail,
-      },
-      data: {
-        tvShows: {
-          set: user?.tvShows.filter((item) => item.id !== movieId),
-        },
-      },
-    })
+    user = await removeTvShowFromPlaylist(userEmail, movieId)
   } else {
     user = await prisma.user.update({
       where: {
@@ -88,7 +113,7 @@ export const addTvShowToPlaylist = async (
           push: {
             id: movieId,
             name: movieName,
-            tvShowImg: movieImg,
+            image: movieImg.replace("original", "w500"),
           },
         },
       },

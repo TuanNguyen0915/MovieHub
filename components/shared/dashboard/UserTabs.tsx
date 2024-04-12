@@ -1,23 +1,34 @@
 "use client"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { User } from "@prisma/client"
+import { useUserStore } from "@/lib/stores/user.store"
+import MovieTable from "./MovieTable"
+import Link from "next/link"
 
-const UserTabs = ({
-  currentUser,
-}: {
-  currentUser: User | undefined | null
-}) => {
+const UserTabs = () => {
+  const { currentUser, setCurrentUser } = useUserStore()
   return (
     <Tabs defaultValue="movies" className="w-full">
       <TabsList>
-        <TabsTrigger value="movies">Movies</TabsTrigger>
-        <TabsTrigger value="tv-shows">TvShows</TabsTrigger>
+        <TabsTrigger value="movies">Movies ({currentUser?.movies?.length})</TabsTrigger>
+        <TabsTrigger value="tv-shows">TvShows ({currentUser?.tvShows?.length})</TabsTrigger>
       </TabsList>
       <TabsContent value="movies">
-        All liked movies here. {currentUser?.movies.length}
+        {currentUser?.movies?.length === 0 ? (
+          <Link href="/" className="text-center text-lg hover:text-primary transition-all">
+            No movies in your watching list
+          </Link>
+        ) : (
+          <MovieTable movies={currentUser?.movies!} type="movie" />
+        )}
       </TabsContent>
       <TabsContent value="tv-shows">
-        All liked tv-shows here. {currentUser?.tvShows.length}
+        {currentUser?.tvShows?.length === 0 ? (
+          <Link href="/" className="text-center text-lg hover:text-primary transition-all">
+            No tv-show in your watching list
+          </Link>
+        ) : (
+          <MovieTable movies={currentUser?.tvShows!} type="tv-shows" />
+        )}
       </TabsContent>
     </Tabs>
   )

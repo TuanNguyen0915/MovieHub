@@ -24,13 +24,13 @@ model User {
 }
 
 type Movie {
-  id       Int
-  movieImg String
-  name     String
+  id    Int
+  image String
+  name  String
 }
 
 type TvShow {
-  id        Int
-  tvShowImg String
-  name      String
+  id    Int
+  image String
+  name  String
 }
