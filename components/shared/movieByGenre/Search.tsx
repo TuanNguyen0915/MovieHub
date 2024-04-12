@@ -44,7 +44,7 @@ const Search = ({ searchTerm, setSearchTerm, type }: IProps) => {
         </PopoverContent>
       </Popover>
       <form
-        className={` flexBetween group flex-1 rounded-lg border p-2 transition-all hover:border-muted-foreground lg:p-4 ${searchTerm.length > 0 ? "border-muted-foreground" : "border-border"}`}
+        className={` flexBetween group flex-1 rounded-xl border p-2 transition-all hover:border-muted-foreground lg:p-4 ${searchTerm.length > 0 ? "border-muted-foreground" : "border-border"}`}
       >
         <input
           onChange={(e) => setSearchTerm(e.target.value)}

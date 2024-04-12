@@ -49,7 +49,7 @@ const SeasonEpisodes = ({ tvShow, seasonNumber }: IProps) => {
                 key={episode.id}
                 className="flexCol group h-[200px] w-[150px] gap-2 lg:h-[250px] lg:w-[200px]"
               >
-                <div className="relative h-[150px] w-full overflow-hidden rounded-lg lg:h-[200px]">
+                <div className="relative h-[150px] w-full overflow-hidden rounded-xl lg:h-[200px]">
                   <Image
                     src={`https://image.tmdb.org/t/p/w500/${episode.still_path || tvShow?.backdrop_path || tvShow?.poster_path} `}
                     fill

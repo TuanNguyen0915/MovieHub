@@ -83,7 +83,7 @@ const GenrePage = ({ params }: { params: IParams }) => {
                 className="group w-full  space-y-4"
                 key={movie.id}
               >
-                <div className="relative h-[300px] w-full overflow-hidden rounded-lg">
+                <div className="relative h-[300px] w-full overflow-hidden rounded-xl">
                   <MovieCard movie={movie} type="tv-shows"/>
                 </div>
                 <p className="cursor-pointer text-center text-muted-foreground transition-all group-hover:text-foreground">

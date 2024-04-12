@@ -10,6 +10,7 @@ const DashBoard = ({
 }: {
   currentUser: User | null | undefined
 }) => {
+
   return (
     <motion.div className="flexCenter w-full flex-col gap-10">
       <div className="flex w-full items-center gap-4">

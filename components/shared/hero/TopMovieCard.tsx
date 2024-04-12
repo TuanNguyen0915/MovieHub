@@ -19,8 +19,8 @@ const TopMovieCard = ({ movie, idx, type, textStoke }: IProps) => {
             <h1 className="text-stroke text-[200px] font-extrabold">{idx}</h1>
           )}
         </div>
-        <div className="group absolute right-0 z-10 h-full w-[200px] rounded-lg transition-all duration-300 hover:w-full">
-          <div className="relative h-[200px] w-full overflow-hidden rounded-lg border-l-2 border-transparent transition-all duration-300 group-hover:w-full group-hover:border-primary">
+        <div className="group absolute right-0 z-10 h-full w-[200px] rounded-xl transition-all duration-300 hover:w-full">
+          <div className="relative h-[200px] w-full overflow-hidden rounded-xl border-l-2 border-transparent transition-all duration-300 group-hover:w-full group-hover:border-primary">
             <MovieCard movie={movie} topMovies type={type} />
           </div>
         </div>

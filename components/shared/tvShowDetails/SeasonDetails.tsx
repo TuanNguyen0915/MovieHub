@@ -31,7 +31,7 @@ const SeasonDetails = ({ tvShow, season }: IProps) => {
           <Image
             src={src}
             fill
-            className="relative rounded-lg object-contain opacity-0 transition-all duration-1000"
+            className="relative rounded-xl object-contain opacity-0 transition-all duration-1000"
             onLoadingComplete={(image) => {
               image.classList.remove("opacity-0")
             }}
@@ -44,7 +44,7 @@ const SeasonDetails = ({ tvShow, season }: IProps) => {
             width={2000}
             height={2000}
             alt="movie"
-            className="rounded-lg opacity-0 transition-all duration-1000"
+            className="rounded-xl opacity-0 transition-all duration-1000"
             onLoadingComplete={(image) => {
               image.classList.remove("opacity-0")
             }}

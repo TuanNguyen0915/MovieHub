@@ -54,7 +54,7 @@ const Recommendations = ({ movieId, type }: IProps) => {
               key={movie.id}
               className="flexCol group h-[200px] w-[150px] gap-2 lg:h-[250px] lg:w-[200px]"
             >
-              <div className="relative h-[150px] w-full overflow-hidden rounded-lg lg:h-[200px]">
+              <div className="relative h-[150px] w-full overflow-hidden rounded-xl lg:h-[200px]">
                 <Image
                   src={`https://image.tmdb.org/t/p/w500/${movie.poster_path || movie.backdrop_path}`}
                   fill

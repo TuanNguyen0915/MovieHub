@@ -87,7 +87,12 @@ const HeroCard = ({ movie, type }: { movie: IMovie; type: string }) => {
                   </Button>
                 </div>
                 <div className="w-full max-lg:hidden">
-                  <AddToPlaylistBtn />
+                  <AddToPlaylistBtn
+                    type={type}
+                    movieId={movie.id}
+                    movieImg={src}
+                    movieName={movieName}
+                  />
                 </div>
               </div>
             </div>
@@ -123,12 +128,17 @@ const HeroCard = ({ movie, type }: { movie: IMovie; type: string }) => {
             )}
             <Button
               variant="custom"
-              className="mt-20 w-44 p-4 text-lg font-semibold max-lg:hidden mr-4"
+              className="mr-4 mt-20 w-44 p-4 text-lg font-semibold max-lg:hidden"
             >
               <Link href={`/${type}/${movie.id}`}>View Details</Link>
             </Button>
 
-            <AddToPlaylistBtn />
+            <AddToPlaylistBtn
+              type={type}
+              movieId={movie.id}
+              movieImg={src}
+              movieName={movieName}
+            />
           </div>
           {/* PLAY TRAILER */}
           <div className="flexCenter w-full max-lg:hidden">

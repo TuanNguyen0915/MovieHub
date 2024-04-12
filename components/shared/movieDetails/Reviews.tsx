@@ -79,7 +79,7 @@ const Reviews = ({
                   <Link
                     href={review.url}
                     target="_blank"
-                    className="flexCol h-[250px] w-full gap-2 rounded-lg border border-border p-2 transition-all hover:border-foreground"
+                    className="flexCol h-[250px] w-full gap-2 rounded-xl border border-border p-2 transition-all hover:border-foreground"
                   >
                     <div className="flex w-full items-center gap-4">
                       <div className="relative h-[40px] w-[40px] rounded-full">

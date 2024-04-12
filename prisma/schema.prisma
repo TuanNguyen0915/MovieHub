@@ -20,17 +20,17 @@ model User {
   avatar       String?
   movies       Movie[]
   tvShows      TvShow[]
-  currentPlan String @default("Free")
+  currentPlan  String   @default("Free")
 }
 
 type Movie {
-  id        String
-  movie_img String
-  name      String
+  id       Int
+  movieImg String
+  name     String
 }
 
 type TvShow {
-  id         String
-  tvShow_img String
-  name       String
+  id        Int
+  tvShowImg String
+  name      String
 }

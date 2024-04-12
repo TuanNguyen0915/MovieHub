@@ -34,7 +34,7 @@ const SwiperCard = ({ movies, type }: IProps) => {
           <SwiperSlide key={movie.id}>
             <div className="h-[250px] w-[150px] md:w-[200px] group">
               <div
-                className="flexCenter relative h-[200px] w-full overflow-hidden"
+                className="flexCenter relative h-[200px] w-full overflow-hidden border-l-4 border-black hover:border-primary transition-all rounded-xl"
                 key={movie.id}
               >
                 <MovieCard movie={movie} type={type} />
