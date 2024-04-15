@@ -1,5 +1,6 @@
 "use client"
 import GitHubForm from "@/components/shared/form/GitHubForm"
+import GoogleForm from "@/components/shared/form/GoogleForm"
 import SignInForm from "@/components/shared/form/SignInForm"
 import { motion } from "framer-motion"
 import { useSession } from "next-auth/react"
@@ -22,6 +23,7 @@ const LoginPage = () => {
           Login
         </h1>
         <GitHubForm />
+        <GoogleForm />
         <p className="text-center text-2xl font-bold text-primary">or</p>
         <SignInForm />
       </motion.div>

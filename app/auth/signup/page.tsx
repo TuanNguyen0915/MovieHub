@@ -1,13 +1,14 @@
 "use client"
 import GitHubForm from "@/components/shared/form/GitHubForm"
+import GoogleForm from "@/components/shared/form/GoogleForm"
 import SignUpForm from "@/components/shared/form/SignUpForm"
 import { motion } from "framer-motion"
 import { useSession } from "next-auth/react"
 import { redirect } from "next/navigation"
 const LoginPage = () => {
-  const {status} = useSession()
-  
-  if(status === "authenticated"){
+  const { status } = useSession()
+
+  if (status === "authenticated") {
     redirect("/")
   }
   return (
@@ -22,7 +23,8 @@ const LoginPage = () => {
           Register
         </h1>
         <GitHubForm />
-        <p className="text-center text-2xl text-primary font-bold">or</p>
+        <GoogleForm />
+        <p className="text-center text-2xl font-bold text-primary">or</p>
         <SignUpForm />
       </motion.div>
     </div>

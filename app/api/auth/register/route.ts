@@ -1,16 +1,21 @@
-"use server"
-
 import prisma from "@/prisma/prisma.db"
 import bcrypt from "bcrypt"
+
 import { NextResponse } from "next/server"
 
 export const POST = async (req: Request) => {
   try {
     const formData = await req.json()
-    const user = await prisma.user.create({
+    let user = await prisma.user.findUnique({
+      where: { email: formData.email },
+    })
+    if (user) {
+     return NextResponse.json({ error: "User already exists" })
+    }
+    user = await prisma.user.create({
       data: {
         email: formData.email,
-        hashPassword: await bcrypt.hash(formData.password, 10),
+        hashPassword: bcrypt.hashSync(formData.password, 10),
       },
     })
     return NextResponse.json({ user }, { status: 201 })

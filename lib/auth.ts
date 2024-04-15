@@ -1,5 +1,6 @@
 import { Account, AuthOptions, User as AuthUser } from "next-auth"
 import GitHubProviders from "next-auth/providers/github"
+import GoogleProviders from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import prisma from "@/prisma/prisma.db"
 import bcrypt from "bcrypt"
@@ -13,6 +14,10 @@ export const authOptions: AuthOptions = {
     GitHubProviders({
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
+    }),
+    GoogleProviders({
+      clientId: process.env.GOOGLE_ID as string,
+      clientSecret: process.env.GOOGLE_SECRET as string,
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -46,7 +51,13 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account }: { user: AuthUser; account: Account | null }) {
+    async signIn({
+      user,
+      account,
+    }: {
+      user: AuthUser
+      account: Account | null
+    }) {
       if (account?.provider === "credentials") {
         return true
       }
@@ -57,6 +68,22 @@ export const authOptions: AuthOptions = {
           },
         })
         if (!githubUser) {
+          await prisma.user.create({
+            data: {
+              email: user.email as string,
+              avatar: user.image as string,
+            },
+          })
+          return true
+        }
+      }
+      if (account?.provider === "google") {
+        const googleUser = await prisma.user.findUnique({
+          where: {
+            email: user.email as string,
+          },
+        })
+        if (!googleUser) {
           await prisma.user.create({
             data: {
               email: user.email as string,

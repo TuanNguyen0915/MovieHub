@@ -8,6 +8,7 @@ import UserButton from "./UserButton"
 import PopUser from "./PopUser"
 import SignInButton from "./SignInButton"
 import { useUserStore } from "@/lib/stores/user.store"
+import { useSession } from "next-auth/react"
 
 const Header = () => {
   const {currentUser} = useUserStore()

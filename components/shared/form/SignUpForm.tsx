@@ -36,8 +36,8 @@ const SignUpForm = () => {
   })
   const submitForm: SubmitHandler<InputType> = async (data) => {
     const newUser = await createNewUser(data)
-    if (!newUser) {
-      toast.error("Sign Up Failed", {
+    if (newUser.error) {
+      toast.error(newUser.error, {
         style: {
           background: "#333",
           color: "#fff",
